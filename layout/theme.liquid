@@ -192,13 +192,12 @@
     <div class="w-screen min-h-full overflow-x-hidden bg-lotus-beige">
 
       {% section 'announcement-bar' %}
-      {% comment %}{% section 'header' %}{% endcomment %}
       {% section 'lotus-header' %}
       <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
         {{ content_for_layout }}
       </main>
 
-      {% section 'footer' %}
+      {% section 'lotus-footer' %}
 
       <ul hidden>
         <li id="a11y-refresh-page-message">{{ 'accessibility.refresh_page' | t }}</li>
