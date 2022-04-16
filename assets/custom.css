@@ -1,0 +1,67 @@
+.quantity {
+  min-height: calc((var(--inputs-border-width) * 2) + 3rem);
+  width: calc(
+    11rem / var(--font-body-scale) + var(--inputs-border-width) * 0.5
+  );
+}
+
+.quantity:before {
+  border: solid 1px #303030;
+}
+
+.button,
+.button-label,
+.shopify-challenge__button,
+.customer button,
+.shopify-payment-button__button,
+.quantity__input,
+.form__label {
+  font-size: 1rem !important;
+}
+
+.button,
+.shopify-challenge__button,
+.customer button,
+button.shopify-payment-button__button--unbranded {
+  min-height: calc(3rem + var(--buttons-border-width) * 2);
+  line-height: 1;
+}
+
+.product-form {
+  margin-top: 20px !important;
+  margin-bottom: 40px !important;
+}
+
+.product-form__submit {
+  border: solid 1px #303030 !important;
+  margin-right: 10px;
+}
+
+.product-form__submit:hover {
+  border: solid 1px #b8513d !important;
+  background: #b8513d !important;
+  color: #fff !important;
+}
+
+.product-form__submit:after,
+.shopify-payment-button__button:after {
+  box-shadow: none !important;
+  border: none !important;
+}
+
+.product-form__submit:before {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.shopify-payment-button__button:hover {
+  border: solid 1px #b8513d !important;
+  background: #fff3e1 !important;
+  color: #b8513d !important;
+}
+
+.product__description {
+  margin-top: -10px !important;
+  line-height: 1.8 !important;
+  font-size: 1.1rem;
+}
