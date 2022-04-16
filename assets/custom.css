@@ -65,3 +65,15 @@ button.shopify-payment-button__button--unbranded {
   line-height: 1.8 !important;
   font-size: 1.1rem;
 }
+
+.price-item {
+  font-size: 1.2rem;
+}
+
+.card__heading {
+  font-weight: bold;
+}
+
+.price {
+  margin-top: 0 !important;
+}

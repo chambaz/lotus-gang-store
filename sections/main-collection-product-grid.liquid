@@ -82,10 +82,11 @@
       </aside>
     {%- endif -%}
 
-    <div class="product-grid-container{% if section.settings.filter_type == 'vertical' and section.settings.collapse_on_larger_devices %} product-grid-container-vertical{% endif %}" id="ProductGridContainer">
+    <div class="product-grid-container{% if section.settings.filter_type == 'vertical' and section.settings.collapse_on_larger_devices %} product-grid-container-vertical{% endif %} px-8 pb-4 2xl:container 2xl:mx-auto" id="ProductGridContainer">
+    <h1 class="text-5xl font-lotus-pixelmix-bold" style="margin-bottom: 60px;">Our Products</h1>
       {%- paginate collection.products by section.settings.products_per_page -%}
         {%- if collection.products.size == 0 -%}
-          <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+          <div class="collection collection--empty" id="product-grid" data-id="{{ section.id }}">
             <div class="loading-overlay gradient"></div>
             <div class="title-wrapper center">
               <h2 class="title title--primary">
@@ -95,7 +96,7 @@
             </div>
           </div>
         {%- else -%}
-          <div class="collection{% if section.settings.filter_type != 'vertical' %} page-width{% endif %}">
+          <div class="collection{% if section.settings.filter_type != 'vertical' %} {% endif %}">
             <div class="loading-overlay gradient"></div>
     
             <ul id="product-grid" data-id="{{ section.id }}" class="

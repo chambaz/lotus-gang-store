@@ -114,10 +114,14 @@
         --spacing-sections-desktop: {{ settings.spacing_sections }}px;
         --spacing-sections-mobile: {% if settings.spacing_sections < 24 %}{{ settings.spacing_sections }}{% else %}{{ settings.spacing_sections | times: 0.7 | round | at_least: 20 }}{% endif %}px;
 
-        --grid-desktop-vertical-spacing: {{ settings.spacing_grid_vertical }}px;
-        --grid-desktop-horizontal-spacing: {{ settings.spacing_grid_horizontal }}px;
-        --grid-mobile-vertical-spacing: {{ settings.spacing_grid_vertical | divided_by: 2 }}px;
-        --grid-mobile-horizontal-spacing: {{ settings.spacing_grid_horizontal | divided_by: 2 }}px;
+        {% comment %} --grid-desktop-vertical-spacing: {{ settings.spacing_grid_vertical }}px; {% endcomment %}
+        {% comment %} --grid-desktop-horizontal-spacing: {{ settings.spacing_grid_horizontal }}px; {% endcomment %}
+        --grid-desktop-vertical-spacing: 40px;
+        --grid-desktop-horizontal-spacing: 40px;
+        --grid-mobile-vertical-spacing: 40px;
+        --grid-mobile-horizontal-spacing: 20px;
+        {% comment %} --grid-mobile-vertical-spacing: {{ settings.spacing_grid_vertical | divided_by: 2 }}px;
+        --grid-mobile-horizontal-spacing: {{ settings.spacing_grid_horizontal | divided_by: 2 }}px; {% endcomment %}
 
         --text-boxes-border-opacity: {{ settings.text_boxes_border_opacity | divided_by: 100.0 }};
         --text-boxes-border-width: {{ settings.text_boxes_border_thickness }}px;
