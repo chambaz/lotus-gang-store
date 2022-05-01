@@ -94,4 +94,15 @@ button.shopify-payment-button__button--unbranded {
   z-index: 99999;
   position: fixed;
   height: 100%;
+  box-shadow: 0 0px 40px rgb(0, 0, 0, 0.4);
+}
+
+.cart-notification__header {
+  align-items: center;
+}
+
+.modal__close-button.link {
+  margin: 0;
+  height: auto;
+  width: auto;
 }
