@@ -23,7 +23,7 @@
 
 <cart-items class="page-width{% if cart == empty %} is-empty flex align-center justify-center {% else %} section-{{ section.id }}-padding{% endif %} px-8 pb-4 2xl:container 2xl:mx-auto" {% if cart == empty %} style="min-height: calc(100vh - 194px)" {% endif %}>
   <div class="title-wrapper-with-link">
-    <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
+    <h1 class="title title--primary text-5xl font-lotus-pixelmix-bold">{{ 'sections.cart.title' | t }}</h1>
     <a href="{{ routes.all_products_collection_url }}" class="underlined-link">{{ 'general.continue_shopping' | t }}</a>
   </div>
 
@@ -58,7 +58,7 @@
             <tbody>
               {%- for item in cart.items -%}
                 <tr class="cart-item" id="CartItem-{{ item.index | plus: 1 }}">
-                  <td class="cart-item__media">
+                  <td class="cart-item__media" style="padding-top: 2rem;">
                     {% if item.image %}
                       {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}
                       <a href="{{ item.url }}" class="cart-item__link" aria-hidden="true" tabindex="-1"> </a>
