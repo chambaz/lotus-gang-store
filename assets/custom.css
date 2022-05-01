@@ -86,3 +86,12 @@ button.shopify-payment-button__button--unbranded {
 .product-grid-container .card__inner {
   background: none !important;
 }
+
+.cart-notification {
+  top: 0;
+  right: 0;
+  background: var(--gradient-background);
+  z-index: 99999;
+  position: fixed;
+  height: 100%;
+}
