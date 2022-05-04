@@ -106,3 +106,7 @@ button.shopify-payment-button__button--unbranded {
   height: auto;
   width: auto;
 }
+
+.section-template--14549952462896__featured_collection-padding {
+  padding-top: 80px !important;
+}
