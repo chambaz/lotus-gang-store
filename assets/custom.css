@@ -106,3 +106,27 @@ button.shopify-payment-button__button--unbranded {
   height: auto;
   width: auto;
 }
+
+.phantom-connect {
+  background: #5145BC;
+  border: solid 3px #5145BC;
+  display: flex;
+  padding: 12px 15px;
+  color: #fff;
+  border-radius: 8px;
+  transition: .3s;
+}
+
+.phantom-connect img {
+  width: 30px;
+  margin-right: 15px;
+}
+
+.phantom-connect:hover {
+  background: #4E30E8;
+}
+
+.phantom-connect:active {
+  background: #4E30E8;
+  border-color: #463d97;
+}

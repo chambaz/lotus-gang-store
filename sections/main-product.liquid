@@ -234,6 +234,10 @@
                 {{ form | payment_terms }}
               {%- endform -%}
             </div>
+          <button class="phantom-connect">
+            <img src="{{ 'phantom.svg' | asset_url }}" />
+            Connect with Phantom
+          </button>
           {%- when 'description' -%}
             {%- if product.description != blank -%}
               <div class="product__description rte quick-add-hidden text-lg">
