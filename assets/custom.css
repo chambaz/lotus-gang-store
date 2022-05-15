@@ -130,3 +130,29 @@ button.shopify-payment-button__button--unbranded {
   background: #4E30E8;
   border-color: #463d97;
 }
+
+.lotus-nft-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+  height: 460px;
+  overflow: auto;
+}
+
+.lotus-nft {
+  cursor: pointer;
+}
+
+.lotus-nft-img {
+  border: solid 2px transparent;
+  transition: .3s;
+}
+
+.lotus-nft-name {
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.lotus-nft:hover .lotus-nft-img {
+  border-color: #b8513d;
+}

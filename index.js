@@ -6,6 +6,7 @@ import {
 
 let connected = false
 const phantomConnectBtn = document.querySelector('[data-phantom-connect]')
+const lotusNftsContainer = document.querySelector('[data-lotus-nfts]')
 
 if (phantomConnectBtn) {
   phantomConnectBtn.addEventListener('click', async () => {
@@ -15,6 +16,7 @@ if (phantomConnectBtn) {
     try {
       const resp = await window.solana.connect()
       const address = resp.publicKey.toString()
+      const addressTrunc = address.substr(0, 4) + '...' + address.substr(-4)
       connected = true
       console.log('Account connected: '+address)
 
@@ -29,7 +31,22 @@ if (phantomConnectBtn) {
       })  
       console.log(lotusNfts)
 
-      phantomConnectBtn.querySelector('span').innerHTML = `Connect ${address}`
+      const lotusNftMarkup = await Promise.all(lotusNfts.map(async lotusNft => {
+        const req = await fetch(lotusNft.data.uri)
+        const json = await req.json()
+        console.log(lotusNft)
+        console.log(json)
+
+        return `
+          <div class="lotus-nft">
+            <img class="lotus-nft-img" src="${json.image}" />
+            <h2 class="lotus-nft-name">${lotusNft.data.name}</h2>
+          </div>
+        `
+      }))
+
+      phantomConnectBtn.querySelector('span').innerHTML = addressTrunc
+      lotusNftsContainer.innerHTML = [...lotusNftMarkup, ...lotusNftMarkup, ...lotusNftMarkup, ...lotusNftMarkup, ...lotusNftMarkup, ...lotusNftMarkup, ...lotusNftMarkup, ...lotusNftMarkup].join('')
 
     } catch (err) {
       console.error('Unable to connect')
