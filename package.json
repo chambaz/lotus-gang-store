@@ -1,0 +1,26 @@
+{
+  "name": "lotus-gang-store",
+  "version": "1.0.0",
+  "description": "[![Build status](https://github.com/shopify/dawn/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Shopify/dawn/actions/workflows/ci.yml?query=branch%3Amain) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?color=informational)](/.github/CONTRIBUTING.md)",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify index.js -p esmify > assets/custom.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chambaz/lotus-gang-store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chambaz/lotus-gang-store/issues"
+  },
+  "homepage": "https://github.com/chambaz/lotus-gang-store#readme",
+  "dependencies": {
+    "@nfteyez/sol-rayz": "^0.10.2",
+    "@solana/web3.js": "^1.41.10",
+    "browserify": "^17.0.0",
+    "esmify": "^2.1.1"
+  }
+}
