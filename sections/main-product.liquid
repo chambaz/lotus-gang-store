@@ -234,11 +234,18 @@
                 {{ form | payment_terms }}
               {%- endform -%}
             </div>
-          <button class="phantom-connect" data-phantom-connect>
-            <img src="{{ 'phantom.svg' | asset_url }}" />
-            <span>Connect with Phantom</span>
-          </button>
-          <div class="lotus-nft-container" data-lotus-nfts></div>
+            
+            {% if product.id == 6916042883120 %}
+              <button class="phantom-connect" data-phantom-connect>
+                <img src="{{ 'phantom.svg' | asset_url }}" />
+                <span>Connect with Phantom</span>
+              </button>
+              <div class="lotus-nft-container" data-lotus-nfts></div>
+              <p class="lotus-nft-chosen" data-lotus-nft-chosen>
+                Selected: <span></span>
+              </p>
+            {% endif %}
+            
           {%- when 'description' -%}
             {%- if product.description != blank -%}
               <div class="product__description rte quick-add-hidden text-lg">
@@ -266,7 +273,7 @@
               </details>
             </div>
           {%- when 'quantity_selector' -%}
-            <div class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}" {{ block.shopify_attributes }}>
+            <div class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}" {{ block.shopify_attributes }} data-product-qty>
               <label class="form__label" for="Quantity-{{ section.id }}">
                 {{ 'products.product.quantity.label' | t }}
               </label>
@@ -423,7 +430,7 @@
 
                 {%- form 'product', product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
                   <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" disabled>
-                  <div class="product-form__buttons flex">
+                  <div class="product-form__buttons flex" data-product-btns>
                     <button
                       type="submit"
                       name="add"

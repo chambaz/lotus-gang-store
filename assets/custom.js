@@ -9,11 +9,42 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-let connected = false;
 const phantomConnectBtn = document.querySelector('[data-phantom-connect]');
 const lotusNftsContainer = document.querySelector('[data-lotus-nfts]');
+const productQty = document.querySelector('[data-product-qty]');
+const productBtns = document.querySelector('[data-product-btns]');
+const lotusNftChosen = document.querySelector('[data-lotus-nft-chosen]');
+let connected = false;
+let chosen = null;
 
 if (phantomConnectBtn) {
+  productQty.style.opacity = 0;
+  productBtns.style.opacity = 0;
+  lotusNftsContainer.addEventListener('click', e => {
+    console.log(e.target.parentNode);
+
+    if (e.target.parentNode.hasAttribute('data-lotus-nft')) {
+      const name = e.target.parentNode.querySelector('[data-lotus-nft-name]').innerHTML;
+      const lotusNfts = lotusNftsContainer.querySelectorAll('[data-lotus-nft]');
+      lotusNfts.forEach(lotusNft => {
+        lotusNft.style.opacity = 0.25;
+      });
+
+      if (name != chosen) {
+        chosen = name;
+        lotusNftChosen.querySelector('span').innerHTML = name;
+        e.target.parentNode.style.opacity = 1;
+        productQty.style.opacity = 1;
+        productBtns.style.opacity = 1;
+        lotusNftChosen.style.opacity = 1;
+      } else {
+        chosen = null;
+        productQty.style.opacity = 0;
+        productBtns.style.opacity = 0;
+        lotusNftChosen.style.opacity = 0;
+      }
+    }
+  });
   phantomConnectBtn.addEventListener('click', async () => {
     if (connected) {
       return;
@@ -41,9 +72,9 @@ if (phantomConnectBtn) {
         console.log(lotusNft);
         console.log(json);
         return `
-          <div class="lotus-nft">
+          <div class="lotus-nft" data-lotus-nft>
             <img class="lotus-nft-img" src="${json.image}" />
-            <h2 class="lotus-nft-name">${lotusNft.data.name}</h2>
+            <h2 class="lotus-nft-name" data-lotus-nft-name>${lotusNft.data.name}</h2>
           </div>
         `;
       }));
