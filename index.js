@@ -85,8 +85,8 @@ if (phantomConnectBtn) {
       }))
 
       phantomConnectBtn.querySelector('span').innerHTML = addressTrunc
-      lotusNftsContainer.innerHTML = lotusNftMarkup
-      
+      lotusNftsContainer.innerHTML = lotusNftMarkup.join('')
+
     } catch (err) {
       console.error('Unable to connect')
       console.error(err)
