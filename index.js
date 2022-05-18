@@ -9,6 +9,7 @@ const lotusNftsContainer = document.querySelector('[data-lotus-nfts]')
 const productQty = document.querySelector('[data-product-qty]')
 const productBtns = document.querySelector('[data-product-btns]')
 const lotusNftChosen = document.querySelector('[data-lotus-nft-chosen]')
+const lotusNftToken = document.querySelector('[data-lotus-nft-token]')
 
 let connected = false
 let chosen = null
@@ -30,6 +31,7 @@ if (phantomConnectBtn) {
       if (name != chosen) {
         chosen = name
         lotusNftChosen.querySelector('span').innerHTML = name
+        lotusNftToken.value = name
 
         e.target.parentNode.style.opacity = 1
         productQty.style.opacity = 1
