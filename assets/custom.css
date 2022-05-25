@@ -108,13 +108,13 @@ button.shopify-payment-button__button--unbranded {
 }
 
 .phantom-connect {
-  background: #5145BC;
-  border: solid 3px #5145BC;
+  background: #5145bc;
+  border: solid 3px #5145bc;
   display: flex;
   padding: 12px 15px;
   color: #fff;
   border-radius: 8px;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .phantom-connect img {
@@ -123,11 +123,11 @@ button.shopify-payment-button__button--unbranded {
 }
 
 .phantom-connect:hover {
-  background: #4E30E8;
+  background: #4e30e8;
 }
 
 .phantom-connect:active {
-  background: #4E30E8;
+  background: #4e30e8;
   border-color: #463d97;
 }
 
@@ -145,7 +145,7 @@ button.shopify-payment-button__button--unbranded {
 
 .lotus-nft-img {
   border: solid 2px transparent;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .lotus-nft-name {
@@ -159,7 +159,7 @@ button.shopify-payment-button__button--unbranded {
 
 .product-form__quantity,
 .product-form__buttons {
-  transition: .3s;
+  transition: 0.3s;
   opacity: 1;
 }
 
@@ -167,9 +167,76 @@ button.shopify-payment-button__button--unbranded {
   font-size: 32px;
   font-weight: bold;
   opacity: 0;
-  transition: .3s;
+  transition: 0.3s;
 }
 
 .lotus-nft-chosen span {
   font-weight: normal;
+}
+
+.lotus-collections {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.lotus-collections-item {
+  align-items: center;
+  background: #b8513d;
+  justify-content: center;
+  display: flex;
+  min-height: calc(100vh - 310px);
+  width: 100%;
+  text-align: center;
+  flex-direction: column;
+  transition: 0.3s;
+  padding: 0 20px;
+}
+
+.lotus-collections-item-title {
+  color: white;
+  transition: 0.3s;
+}
+
+.lotus-collections-item-btn {
+  border: solid 2px white;
+  color: white;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 40px;
+  background: transparent;
+  transition: 0.3s;
+}
+
+.lotus-collections-item:hover {
+  background: white;
+  color: #b8513d;
+}
+
+.lotus-collections-item:hover .lotus-collections-item-title {
+  color: #b8513d;
+}
+
+.lotus-collections-item:hover .lotus-collections-item-btn {
+  background: #b8513d;
+  color: white;
+}
+
+.lotus-collections-item-btn:hover {
+  border-color: #b8513d !important;
+  background: white !important;
+  color: #b8513d !important;
+}
+
+@media (min-width: 768px) {
+  .lotus-collections {
+    flex-direction: row;
+    height: 100%;
+  }
+
+  .lotus-collections-item {
+    width: 50%;
+  }
 }
