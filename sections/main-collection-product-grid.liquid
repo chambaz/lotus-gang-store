@@ -26,6 +26,7 @@
   }
 {%- endstyle -%}
 
+
 <div class="section-{{ section.id }}-padding">
   {% comment %} Sort is the first tabbable element when filter type is vertical {% endcomment %}
   {%- if section.settings.enable_sorting and section.settings.filter_type == 'vertical' -%}
@@ -83,7 +84,7 @@
     {%- endif -%}
 
     <div class="product-grid-container{% if section.settings.filter_type == 'vertical' and section.settings.collapse_on_larger_devices %} product-grid-container-vertical{% endif %} px-8 pb-4 2xl:container 2xl:mx-auto" id="ProductGridContainer">
-    <h1 class="text-5xl font-lotus-pixelmix-bold" style="margin-bottom: 60px;">Our Products</h1>
+    <h1 class="text-5xl font-lotus-pixelmix-bold" style="margin-bottom: 60px;">For {{ collection.title }} </h1>
       {%- paginate collection.products by section.settings.products_per_page -%}
         {%- if collection.products.size == 0 -%}
           <div class="collection collection--empty" id="product-grid" data-id="{{ section.id }}">
