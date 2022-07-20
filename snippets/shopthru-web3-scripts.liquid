@@ -1,0 +1,38 @@
+<script>
+      window.shopthru_add_to_cart = "{{ 'products.product.add_to_cart'| t }}";
+      window.shopthru_sold_out = "{{ 'products.product.sold_out' | t }}";
+      const add_to_cart_t = !window.shopthru_add_to_cart
+        ? undefined
+        : window.shopthru_add_to_cart
+            ?.toLowerCase()
+            .includes("translation missing")
+        ? ""
+        : window.shopthru_add_to_cart?.toLowerCase();
+      const sold_out_t = !window.shopthru_sold_out
+        ? undefined
+        : window.shopthru_sold_out
+            ?.toLowerCase()
+            .includes("translation missing")
+        ? ""
+        : window.shopthru_sold_out?.toLowerCase();
+    </script>
+    <script
+      type="application/javascript"
+      async
+      src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+    ></script>
+    <script
+      type="application/javascript"
+      async
+      src="https://unpkg.com/@walletconnect/web3-provider"
+    ></script>
+    <script
+      type="application/javascript"
+      async
+      src="https://unpkg.com/web3modal@latest"
+    ></script>
+    <script
+      type="application/javascript"
+      async
+      src="https://unpkg.com/axios/dist/axios.min.js"
+    ></script>

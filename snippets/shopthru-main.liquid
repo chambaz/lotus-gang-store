@@ -1,0 +1,195 @@
+ <script>
+const getChildElementIndex = (node) =>
+  node && Array.prototype.indexOf.call(node.parentNode.children, node);
+const getAllIndexes = (arr) => {
+  var indexes = [],
+    i;
+  for (i = 0; i < arr.length; i++)
+    if (
+      arr[i].name === "checkout" ||
+      arr[i].textContent.toLowerCase().includes("checkout")
+    )
+      indexes.push(i);
+  return indexes;
+};
+const st_data = document.getElementById("st_product");
+let st_cart_data = document.querySelectorAll(".st_cart_form");
+const st_announcementText = document.createElement("p");
+st_announcementText.classList.add("shopthru-announce");
+const st_connectButton = document.createElement("button");
+st_connectButton.disabled = true;
+st_connectButton.innerText = "Connect Wallet";
+st_connectButton.type = "button";
+
+let st_add_to_cart,
+  st_add_to_cart_parent,
+  st_buy_button,
+  st_buy_button_parent,
+  runCartScript;
+
+if (st_data) {
+  const destructureFilters = (filterString) =>
+    filterString.split(",")?.map((str) => {
+      const t = str?.split("_");
+      const id = t[0]?.split(":")[1];
+      const start = t[1]?.split(":")[1];
+      const end = t[2]?.split(":")[1];
+      return { id, start, end };
+    });
+  let {
+    shopthruCampaignIds,
+    shopthruCampaignType,
+    shopthruMaxDiscount,
+  } = st_data?.dataset;
+  let filters = destructureFilters(shopthruCampaignIds);
+  filters = filters.filter((item) => {
+    const now = new Date().getTime();
+    const start = new Date(+item.start).getTime();
+    if (+item.end) {
+      const end = new Date(+item.end).getTime();
+      return now >= start && now <= end;
+    }
+    return now >= start;
+  });
+  if (filters.length) {
+    let product_page_buttons = document
+      .getElementById("st_data_section")
+      ?.parentNode.getElementsByTagName("button");
+    product_page_buttons = [...product_page_buttons];
+    let add_to_cart_index = product_page_buttons.findIndex(
+      (btn) => btn.name == "add"
+    );
+    if (add_to_cart_index < 0)
+      add_to_cart_index = product_page_buttons.findIndex((btn) =>
+        btn.textContent.toLowerCase().includes("add to cart")
+      );
+    st_add_to_cart = product_page_buttons[add_to_cart_index];
+    st_add_to_cart_parent = st_add_to_cart?.parentNode;
+    st_buy_button = document.querySelector(".shopify-payment-button");
+    st_buy_button_parent = st_buy_button?.parentNode;
+
+    const product_announcement = st_announcementText;
+    product_announcement.id = "st_product_announcement";
+    const product_connect_button = st_connectButton;
+    product_connect_button.id = "st_product_connect";
+    if (shopthruCampaignIds && shopthruCampaignType) {
+      if (shopthruCampaignType == "full")
+        st_add_to_cart && (st_add_to_cart.disabled = true);
+      let st_add_to_cart_styles = st_add_to_cart?.classList;
+      st_add_to_cart_styles &&
+        (st_add_to_cart_styles = [...st_add_to_cart_styles]);
+
+      product_announcement.innerHTML =
+        shopthruCampaignType == "full"
+          ? `This product is reserved for specific token holders. To see if you qualify, click on <span style="font-weight:bold">"Connect Wallet"</span>.`
+          : shopthruCampaignType == "discount"
+          ? `You may qualify for <span style="font-weight:bold">discounts of up to ` +
+            shopthruMaxDiscount +
+            `%</span> on this product. To see if you qualify, click on <span style="font-weight:bold">"Connect Wallet"</span>.`
+          : null;
+      product_connect_button.classList.add(
+        ...st_add_to_cart_styles,
+        "shopthru-connect"
+      );
+      st_add_to_cart_parent.prepend(product_connect_button);
+      st_add_to_cart_parent.parentElement.insertBefore(
+        product_announcement,
+        st_add_to_cart_parent
+      );
+    }
+
+    setTimeout(() => {
+      if (shopthruCampaignType == "full") {
+        st_add_to_cart && (st_add_to_cart.disabled = false);
+        st_add_to_cart && st_add_to_cart_parent.removeChild(st_add_to_cart);
+        st_buy_button && st_buy_button_parent.removeChild(st_buy_button);
+      }
+    }, 1000);
+  }
+}
+if (st_cart_data?.length) {
+  runCartScript = () =>
+    fetch("/apps/blockchain/filters/all-products")
+      .then((response) => response.json())
+      .then((data) => {
+        let { filters } = data;
+        filters = filters?.filter((item) => {
+          const now = new Date().getTime();
+          const start = new Date(item.start).getTime();
+          if (item.end) {
+            const end = new Date(item.end).getTime();
+            return now >= start && now <= end;
+          }
+          return now >= start;
+        });
+        if (filters?.length) {
+          window.SHOPTHRU_CART_FILTERS = filters;
+          document
+            .querySelectorAll(".shopthru-connect")
+            .forEach((item) => item.parentElement.removeChild(item));
+          const max_cart_discount = filters.sort(
+            (a, b) => b.discount - a.discount
+          )[0].discount;
+          let cart_page_buttons = document.getElementsByTagName("button");
+          let checkout_button_Indexes = getAllIndexes(cart_page_buttons);
+          let checkout_parents_and_styles = checkout_button_Indexes.map(
+            (index) => {
+              return {
+                parent: cart_page_buttons[index].parentNode,
+                styles: cart_page_buttons[index].classList,
+              };
+            }
+          );
+          document
+            .querySelectorAll(".shopthru-announce")
+            .forEach(
+              (item) =>
+                (item.innerHTML =
+                  `You may qualify for <span style="font-weight:bold">discounts of up to ` +
+                  max_cart_discount +
+                  `%</span> on some products in your cart. To see if you qualify, click on <span style="font-weight:bold">"Connect Wallet"</span>.`)
+            );
+          document
+            .querySelectorAll(".st_cart_form")
+            .forEach((item) => (item.style.display = "contents"));
+          checkout_parents_and_styles.forEach((item) => {
+            const checkout_connect_button = document.createElement("button");
+            checkout_connect_button.disabled = true;
+            checkout_connect_button.innerText = "Connect Wallet";
+            checkout_connect_button.type = "button";
+            checkout_connect_button.classList.add(
+              ...item.styles,
+              "shopthru-connect",
+              "st_cart_connect"
+            );
+            document
+              .querySelectorAll(".st_cart_form")
+              .forEach((item) => (item.style.display = "contents"));
+            item.parent.style.display = "block";
+            item.parent.prepend(checkout_connect_button);
+          });
+        }
+      });
+  runCartScript();
+}
+</script>
+ <script
+      type="application/javascript"
+      async
+      src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+    ></script>
+    <script
+      type="application/javascript"
+      async
+      src="https://unpkg.com/@walletconnect/web3-provider"
+    ></script>
+    <script
+      type="application/javascript"
+      async
+      src="https://unpkg.com/web3modal@latest"
+    ></script>
+    <script
+      type="application/javascript"
+      async
+      src="https://unpkg.com/axios/dist/axios.min.js"
+    ></script>
