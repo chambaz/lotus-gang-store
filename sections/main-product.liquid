@@ -31,7 +31,7 @@
     <link id="ModelViewerOverride" rel="stylesheet" href="{{ 'component-model-viewer-ui.css' | asset_url }}" media="print" onload="this.media='all'">
   {%- endif -%}
 
-  <div class="product--{{ section.settings.media_size }} product--{{ section.settings.gallery_layout }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %} px-8 pb-4 2xl:container 2xl:mx-auto">
+  <div {% if product.collections[0].handle == 'holders' %} data-wallet-check {% endif %} class="product--{{ section.settings.media_size }} product--{{ section.settings.gallery_layout }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %} px-8 pb-4 2xl:container 2xl:mx-auto">
     <div class="grid__item product__media-wrapper">
       <media-gallery id="MediaGallery-{{ section.id }}" role="region" {% if section.settings.enable_sticky_info %}class="product__media-gallery"{% endif %} aria-label="{{ 'products.product.media.gallery_viewer' | t }}" data-desktop-layout="{{ section.settings.gallery_layout }}">
         <div id="GalleryStatus-{{ section.id }}" class="visually-hidden" role="status"></div>
@@ -231,17 +231,6 @@
                 {{ form | payment_terms }}
               {%- endform -%}
             </div>
-            
-            {% if product.id == 6916042883120 %}
-              <button class="phantom-connect" data-phantom-connect>
-                <img src="{{ 'phantom.svg' | asset_url }}" />
-                <span>Connect with Phantom</span>
-              </button>
-              <div class="lotus-nft-container" data-lotus-nfts></div>
-              <p class="lotus-nft-chosen" data-lotus-nft-chosen>
-                Selected: <span></span>
-              </p>
-            {% endif %}
             
           {%- when 'description' -%}
             {%- if product.description != blank -%}

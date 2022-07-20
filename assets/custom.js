@@ -9,51 +9,56 @@ function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "functio
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-const phantomConnectBtn = document.querySelector('[data-phantom-connect]');
-const checkConnectionDiv = document.querySelector('[data-connect-check]');
+const init = async () => {
+  console.log('Lotus Gang Store');
+  const phantomConnectBtn = document.querySelector('[data-wallet-connect]');
+  const checkConnectionDiv = document.querySelector('[data-wallet-check]');
 
-const checkConnection = async () => {
-  try {
-    const resp = await window.solana.connect();
-    const address = resp.publicKey.toString();
-    const addressTrunc = address.substr(0, 4) + '...' + address.substr(-4);
-    connected = true;
-    console.log('Account connected: ' + address);
-    const publicAddress = await (0, _solRayz.resolveToWalletAddress)({
-      text: address
+  const checkConnection = async () => {
+    try {
+      const resp = await window.solana.connect();
+      const address = resp.publicKey.toString();
+      const addressTrunc = address.substr(0, 4) + '...' + address.substr(-4);
+      console.log('Account connected: ' + address);
+      const publicAddress = await (0, _solRayz.resolveToWalletAddress)({
+        text: address
+      });
+      const nftArray = await (0, _solRayz.getParsedNftAccountsByOwner)({
+        publicAddress
+      });
+      const lotusNfts = nftArray.filter(nft => {
+        return nft.updateAuthority === '3n1mz8MyqpQwgX9E8CNPPZtAdJa3aLpuCSMbPumM9wzZ';
+      });
+      return lotusNfts;
+    } catch (err) {
+      console.error('Unable to connect');
+      console.error(err);
+    }
+  };
+
+  if (checkConnectionDiv) {
+    const validTokens = await checkConnection();
+
+    if (!validTokens.length) {
+      window.location = '/';
+    }
+  }
+
+  if (phantomConnectBtn) {
+    phantomConnectBtn.addEventListener('click', async () => {
+      const validTokens = await checkConnection();
+      console.log(validTokens);
+
+      if (!validTokens.length) {
+        alert('This section of the store is for Lotus Gang holders only.');
+      } else {
+        window.location = '/collections/holders';
+      }
     });
-    const nftArray = await (0, _solRayz.getParsedNftAccountsByOwner)({
-      publicAddress
-    });
-    const lotusNfts = nftArray.filter(nft => {
-      return nft.updateAuthority === '3n1mz8MyqpQwgX9E8CNPPZtAdJa3aLpuCSMbPumM9wzZ';
-    });
-    console.log(lotusNfts);
-  } catch (err) {
-    console.error('Unable to connect');
-    console.error(err);
   }
 };
 
-let connected = false;
-
-if (checkConnectionDiv) {
-  checkConnection();
-}
-
-if (phantomConnectBtn) {
-  phantomConnectBtn.addEventListener('click', async () => {
-    if (connected) {
-      return;
-    }
-
-    await checkConnection();
-
-    if (connected) {
-      window.location = '/collections/holders';
-    }
-  });
-}
+document.addEventListener('DOMContentLoaded', init);
 
 },{"@nfteyez/sol-rayz":19,"@solana/web3.js":37}],2:[function(require,module,exports){
 function _assertThisInitialized(self) {
